@@ -1,7 +1,8 @@
-# trees.py -- tree functions
+# sherwood.py -- sherwood forest, a CLI tree utility
 
 
 import sys, json
+
 
 NULL_PARENT_STR = '-'
 PREORDER = 1
@@ -24,7 +25,7 @@ def leafs(x):
     return a
 
 
-def read_tree(f):
+def read_forest(f):
     x = {}
     for i in f:
         t = i[:-1].split('\t')
@@ -103,21 +104,21 @@ def main(argv):
     if 0:
         pass
     elif 'roots' == c:
-        x = read_tree(sys.stdin)
+        x = read_forest(sys.stdin)
         for i in roots(x):
             sys.stdout.write(dump_node(i) + '\n')
     elif 'leafs' == c:
-        x = read_tree(sys.stdin)
+        x = read_forest(sys.stdin)
         for i in leafs(x):
             sys.stdout.write(dump_node(i) + '\n')
     elif 'read' == c:
-        x = read_tree(sys.stdin)
+        x = read_forest(sys.stdin)
         sys.stdout.write(json.dumps(x, indent=2))
     elif 'branch' == c:
-        x = read_tree(sys.stdin)
+        x = read_forest(sys.stdin)
         walk(x, argv[1], lambda x, _: sys.stdout.write(dump_node(x) + '\n'))
     elif 'stats' == c:
-        forest = read_tree(sys.stdin)
+        forest = read_forest(sys.stdin)
         x = stats(forest, argv[1])
         for i, j in x.items():
             sys.stdout.write('%s\t%g\n' % (i, j))
